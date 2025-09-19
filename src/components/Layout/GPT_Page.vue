@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import Sidebar01 from '@/components/AppSidebar/Sidebar01.vue'
-import { CirclePlus, BookOpenText, Menu } from 'lucide-vue-next'
+import { CirclePlus, BookOpenText, Menu, TestTube } from 'lucide-vue-next'
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover'
 import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
@@ -43,7 +43,7 @@ const handleNavigation = (path: string) => {
     if (store.isSidebarOpen) {
       store.isRightSidebarOpen = false
     }
-    if (path === '/channels' || path === '/knowledges') {
+    if (path === '/channels' || path === '/knowledges' || path === '/test') {
     // 设置query
     // const path = '/knowledges'
     const url = `${window.location.origin}${path}`
@@ -52,7 +52,7 @@ const handleNavigation = (path: string) => {
     }
     
   } else {
-    if (path === '/channels' || path === '/knowledges') {
+    if (path === '/channels' || path === '/knowledges' || path === '/test') {
       store.show_main_router = true
     }
     router.push(path)
@@ -251,6 +251,16 @@ const handleMobileNavigation = (path: string) => {
                     <BookOpenText class="h-5 w-5" />
                     知识库
                   </Button>
+                  
+                  <Button 
+                    @click="handleMobileNavigation('/test')"
+                    variant="ghost" 
+                    :class="{ 'bg-gray-100 text-gray-900': router.currentRoute.value.path === '/test' }"
+                    class="w-full justify-start gap-3 h-10"
+                  >
+                    <TestTube class="h-5 w-5" />
+                    测试
+                  </Button>
                 </nav>
               </div>
               
@@ -357,6 +367,24 @@ const handleMobileNavigation = (path: string) => {
             </TooltipTrigger>
             <TooltipContent side="right">
               知识库
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger as-child>
+              <a
+                @click="handleNavigation('/test')"
+                :class="{ 'bg-gray-900 text-white': router.currentRoute.value.path === '/test' }"
+                class="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-gray-900 hover:text-white md:h-8 md:w-8 hover:cursor-pointer"
+              >
+                <TestTube class="h-5 w-5" />
+                <span class="sr-only">测试</span>
+              </a>
+            </TooltipTrigger>
+            <TooltipContent side="right">
+              测试
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
